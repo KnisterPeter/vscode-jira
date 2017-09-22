@@ -1,0 +1,86 @@
+{
+  "name": "vscode-jira",
+  "displayName": "vscode-jira",
+  "description": "JIRA integration for vscode",
+  "icon": "jira.png",
+  "galleryBanner": {
+    "color": "#0052CC",
+    "theme": "light"
+  },
+  "version": "0.0.1",
+  "publisher": "KnisterPeter",
+  "engines": {
+      "vscode": "^1.16.0"
+  },
+  "categories": [
+      "Other"
+  ],
+  "activationEvents": [
+      "*"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+      "configuration": {
+        "type": "object",
+        "title": "JIRA configuration",
+        "properties": {
+          "jira.baseUrl": {
+            "type": "string",
+            "description": "Base URL to the JIRA instance (e.g. https://your.base-to-jira.com/)"
+          },
+          "jira.projectNames": {
+            "type": "string",
+            "description": "Project name of your JIRA project to scan for (could be a comma separated list of names)"
+          }
+        }
+      }
+  },
+  "scripts": {
+    "linter": "tslint --project ./tsconfig.json --type-check",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "commitmsg": "conventional-changelog-lint -e",
+    "prerelease": "git checkout master && git pull origin master && npm run vscode:prepublish",
+    "release": "standard-version",
+    "postrelease": "git push --follow-tags origin master",
+    "publish-extension": "vsce publish $(node -e \"console.log(require('./package.json').version)\")"
+  },
+  "devDependencies": {
+    "@knisterpeter/standard-tslint": "^1.5.0",
+    "typescript": "^2.5.2",
+    "vscode": "^1.1.5",
+    "mocha": "^3.5.0",
+    "@types/node": "^7.0.43",
+    "@types/mocha": "^2.2.42",
+    "conventional-changelog-lint": "^2.0.0",
+    "conventional-changelog-lint-config-angular": "1.0.0",
+    "cz-customizable": "5.0.0",
+    "husky": "^0.14.1",
+    "standard-version": "4.2.0",
+    "tslint": "5.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KnisterPeter/vscode-jira.git"
+  },
+  "author": {
+    "name": "Markus Wolf",
+    "email": "knister.peter@shadowrun-clan.de"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KnisterPeter/vscode-jira/issues"
+  },
+  "homepage": "https://github.com/KnisterPeter/vscode-jira",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./.cz-config.js"
+    }
+  }
+}
