@@ -10,30 +10,42 @@
   "version": "0.0.1",
   "publisher": "KnisterPeter",
   "engines": {
-      "vscode": "^1.16.0"
+    "vscode": "^1.16.0"
   },
   "categories": [
-      "Other"
+    "Other"
   ],
   "activationEvents": [
-      "*"
+    "*"
   ],
   "main": "./out/src/extension",
   "contributes": {
-      "configuration": {
-        "type": "object",
-        "title": "JIRA configuration",
-        "properties": {
-          "jira.baseUrl": {
-            "type": "string",
-            "description": "Base URL to the JIRA instance (e.g. https://your.base-to-jira.com/)"
-          },
-          "jira.projectNames": {
-            "type": "string",
-            "description": "Project name of your JIRA project to scan for (could be a comma separated list of names)"
-          }
+    "configuration": {
+      "type": "object",
+      "title": "JIRA configuration",
+      "properties": {
+        "jira.baseUrl": {
+          "type": "string",
+          "description": "Base URL to the JIRA instance (e.g. https://your.base-to-jira.com/)"
+        },
+        "jira.projectNames": {
+          "type": "string",
+          "description": "Project name of your JIRA project to scan for (could be a comma separated list of names)"
         }
       }
+    },
+    "commands": [
+      {
+        "command": "vscode-jira.setupCredentials",
+        "title": "Setup credentials...",
+        "category": "JIRA"
+      },
+      {
+        "command": "vscode-jira.browseMyIssues",
+        "title": "Browse my issues...",
+        "category": "JIRA"
+      }
+    ]
   },
   "scripts": {
     "linter": "tslint --project ./tsconfig.json --type-check",
@@ -82,5 +94,8 @@
     "cz-customizable": {
       "config": "./.cz-config.js"
     }
+  },
+  "dependencies": {
+    "pretend": "0.7.0"
   }
 }
