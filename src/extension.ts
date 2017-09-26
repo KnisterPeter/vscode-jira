@@ -26,8 +26,13 @@ export function activate(_context: vscode.ExtensionContext): void {
 
     const credentials: string | undefined = context.globalState.get(`vscode-jira:${baseUrl}`);
     if (credentials) {
-      const [username, password] = credentials.split(CREDENTIALS_SEPARATOR);
-      state.jira = connectToJira();
+      const connect = async() => {
+        const [username, password] = credentials.split(CREDENTIALS_SEPARATOR);
+        state.jira = await connectToJira();
+      };
+      connect().catch(() => {
+        vscode.window.showErrorMessage('Failed to connect to jira');
+      });
     }
   }
 
@@ -37,10 +42,17 @@ export function activate(_context: vscode.ExtensionContext): void {
   vscode.commands.registerCommand(browseMyIssues.id, browseMyIssues.run);
 }
 
-export function connectToJira(): Jira | undefined {
+export async function connectToJira(): Promise<Jira | undefined> {
   const credentials: string | undefined = context.globalState.get(`vscode-jira:${baseUrl}`);
   if (credentials && baseUrl) {
     const [username, password] = credentials.split(CREDENTIALS_SEPARATOR);
-    return createClient(baseUrl, username, password);
+    const client = createClient(baseUrl, username, password);
+    const serverInfo = await client.serverInfo();
+    if (serverInfo.versionNumbers[0] < 7) {
+      vscode.window.showInformationMessage(
+        `Unsupported JIRA version '${serverInfo.version}'. Must be at least 7.0.0`);
+      return;
+    }
+    return client;
   }
 }
