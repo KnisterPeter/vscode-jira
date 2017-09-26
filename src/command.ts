@@ -1,5 +1,5 @@
-export interface Command {
+export interface Command<T = void> {
   id: string;
 
-  run(): void | Promise<void>;
+  run(...args: any[]): T | Promise<T>;
 }

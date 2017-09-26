@@ -44,6 +44,11 @@
         "command": "vscode-jira.browseMyIssues",
         "title": "Browse my issues...",
         "category": "JIRA"
+      },
+      {
+        "command": "vscode-jira.activateIssues",
+        "title": "Activate an issues...",
+        "category": "JIRA"
       }
     ]
   },

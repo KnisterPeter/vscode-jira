@@ -1,7 +1,6 @@
 import { bind } from 'decko';
 import * as vscode from 'vscode';
 
-import { createClient } from '../api';
 import { Command } from '../command';
 import { connectToJira, CREDENTIALS_SEPARATOR } from '../extension';
 import state from '../state';
@@ -43,6 +42,7 @@ export class SetupCredentialsCommand implements Command {
     await this.context.globalState.update(`vscode-jira:${this.baseUrl}`,
       `${username}${CREDENTIALS_SEPARATOR}${password}`);
     state.jira = await connectToJira();
+    state.update();
   }
 
 }

@@ -1,10 +1,13 @@
 import * as vscode from 'vscode';
 
 import { createClient, Jira } from './api';
+import { ActivateIssueCommand } from './commands/activate-issue';
 import { BrowseMyIssuesCommand } from './commands/browse-my-issues';
+import { ListMyIssuesCommand } from './commands/list-my-issues';
 import { SetupCredentialsCommand } from './commands/setup-credentials';
 import { IssueLinkProvider } from './document-link-provider';
 import state from './state';
+import { StatusBarManager } from './status-bar';
 
 export const CREDENTIALS_SEPARATOR = '##';
 
@@ -12,7 +15,8 @@ let context: vscode.ExtensionContext;
 let baseUrl: string | undefined;
 
 export function activate(_context: vscode.ExtensionContext): void {
-  context = context;
+  context = _context;
+  state.workspaceState = context.workspaceState;
 
   const config = vscode.workspace.getConfiguration('jira');
   baseUrl = config.get<string>('baseUrl');
@@ -29,6 +33,7 @@ export function activate(_context: vscode.ExtensionContext): void {
       const connect = async() => {
         const [username, password] = credentials.split(CREDENTIALS_SEPARATOR);
         state.jira = await connectToJira();
+        state.update();
       };
       connect().catch(() => {
         vscode.window.showErrorMessage('Failed to connect to jira');
@@ -36,10 +41,15 @@ export function activate(_context: vscode.ExtensionContext): void {
     }
   }
 
-  const setupCredentials = new SetupCredentialsCommand(context, baseUrl);
-  vscode.commands.registerCommand(setupCredentials.id, setupCredentials.run);
-  const browseMyIssues = new BrowseMyIssuesCommand(baseUrl, projectNames);
-  vscode.commands.registerCommand(browseMyIssues.id, browseMyIssues.run);
+  const commands = [
+    new ActivateIssueCommand(),
+    new SetupCredentialsCommand(context, baseUrl),
+    new ListMyIssuesCommand(baseUrl, projectNames),
+    new BrowseMyIssuesCommand(baseUrl)
+  ];
+  context.subscriptions.push(...commands.map(
+    command => vscode.commands.registerCommand(command.id, command.run)));
+  context.subscriptions.push(new StatusBarManager());
 }
 
 export async function connectToJira(): Promise<Jira | undefined> {
