@@ -1,4 +1,4 @@
-import { Pretend, Get } from 'pretend';
+import { Pretend, Get, Post } from 'pretend';
 
 export interface Jira {
   serverInfo(): Promise<ServerInfo>;
@@ -36,7 +36,7 @@ namespace impl {
   export class JiraBlueprint implements Jira {
     @Get('/rest/api/2/serverInfo')
     public serverInfo(): any {/* */}
-    @Get('/rest/api/2/search', true)
+    @Post('/rest/api/2/search')
     public search(): any {/* */}
   }
 }
