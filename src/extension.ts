@@ -48,9 +48,9 @@ export async function connectToJira(): Promise<Jira | undefined> {
     const [username, password] = credentials.split(CREDENTIALS_SEPARATOR);
     const client = createClient(baseUrl, username, password);
     const serverInfo = await client.serverInfo();
-    if (serverInfo.versionNumbers[0] < 7) {
+    if (serverInfo.versionNumbers[0] < 5) {
       vscode.window.showInformationMessage(
-        `Unsupported JIRA version '${serverInfo.version}'. Must be at least 7.0.0`);
+        `Unsupported JIRA version '${serverInfo.version}'. Must be at least 5.0.0`);
       return;
     }
     return client;
