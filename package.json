@@ -4,8 +4,8 @@
   "description": "JIRA integration for vscode",
   "icon": "jira.png",
   "galleryBanner": {
-    "color": "#0052CC",
-    "theme": "light"
+    "color": "#FFFFFF",
+    "theme": "dark"
   },
   "version": "0.1.0",
   "publisher": "KnisterPeter",
