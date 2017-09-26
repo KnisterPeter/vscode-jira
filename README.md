@@ -9,6 +9,8 @@ This vscode extension integrates with JIRA.
 
 * Provide links to JIRA from source code comments
 * Browse issues assigned to you
+* Track activate issue
+* Transition active issue (update workflow)
 
 # Usage
 
