@@ -4,6 +4,7 @@ export interface Jira {
   serverInfo(): Promise<ServerInfo>;
   search(params: {jql: string}): Promise<Issues>;
   getTransitions(issue: string): Promise<Transitions>;
+  doTransition(issue: string, body: DoTransitionBody): Promise<void>;
 }
 
 export interface ServerInfo {
@@ -28,6 +29,21 @@ export interface Issue {
 }
 
 export interface Transitions {
+  transitions: Transition[];
+}
+
+export interface Transition {
+  id: string;
+  name: string;
+  to: {
+    name: string;
+  };
+}
+
+export interface DoTransitionBody {
+  transition: {
+    id: string;
+  };
 }
 
 export function createClient(endpoint: string, username: string, password: string): Jira {
@@ -45,5 +61,7 @@ namespace impl {
     public search(): any {/* */}
     @Get('/rest/api/2/issue/:issue/transitions')
     public getTransitions(): any {/* */}
+    @Post('/rest/api/2/issue/:issue/transitions')
+    public doTransition(): any {/* */}
   }
 }

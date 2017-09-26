@@ -19,7 +19,7 @@ export class ListMyIssuesCommand implements Command<Issue | undefined | null> {
   }
 
   @bind
-  public async run(withEmpty: boolean): Promise<Issue | undefined | null> {
+  public async run(withEmpty: string): Promise<Issue | undefined | null> {
     if (!state.jira || !this.baseUrl || !this.projectNames) {
       vscode.window.showInformationMessage(
         'No JIRA client configured. Setup baseUrl, projectNames, username and password');
@@ -40,7 +40,7 @@ export class ListMyIssuesCommand implements Command<Issue | undefined | null> {
     if (withEmpty) {
       picks.unshift({
         issue: null as any,
-        label: 'None',
+        label: withEmpty,
         description: '',
         detail: undefined
       });

@@ -5,6 +5,7 @@ import { ActivateIssueCommand } from './commands/activate-issue';
 import { BrowseMyIssuesCommand } from './commands/browse-my-issues';
 import { ListMyIssuesCommand } from './commands/list-my-issues';
 import { SetupCredentialsCommand } from './commands/setup-credentials';
+import { TransitionIssueCommand } from './commands/transition-issue';
 import { IssueLinkProvider } from './document-link-provider';
 import state from './state';
 import { StatusBarManager } from './status-bar';
@@ -43,9 +44,10 @@ export function activate(_context: vscode.ExtensionContext): void {
 
   const commands = [
     new ActivateIssueCommand(),
-    new SetupCredentialsCommand(context, baseUrl),
+    new BrowseMyIssuesCommand(baseUrl),
     new ListMyIssuesCommand(baseUrl, projectNames),
-    new BrowseMyIssuesCommand(baseUrl)
+    new SetupCredentialsCommand(context, baseUrl),
+    new TransitionIssueCommand()
   ];
   context.subscriptions.push(...commands.map(
     command => vscode.commands.registerCommand(command.id, command.run)));

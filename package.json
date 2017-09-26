@@ -49,6 +49,11 @@
         "command": "vscode-jira.activateIssues",
         "title": "Activate an issues...",
         "category": "JIRA"
+      },
+      {
+        "command": "vscode-jira.transitionIssues",
+        "title": "Update active issue state...",
+        "category": "JIRA"
       }
     ]
   },

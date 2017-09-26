@@ -19,7 +19,7 @@ export class StatusBarManager {
     const activeIssue = this.getActiveIssue();
     if (activeIssue && activeIssue.key) {
       this.item.text = `$(issue-opened) ${activeIssue.key}`;
-      this.item.command = undefined;
+      this.item.command = 'vscode-jira.transitionIssues';
     } else {
       this.item.text = '$(issue-opened)';
       this.item.command = 'vscode-jira.activateIssues';
