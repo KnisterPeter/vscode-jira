@@ -14,7 +14,8 @@ export class ActivateIssueCommand implements Command {
     const issue = await this.selectIssue(preselected);
     if (issue !== undefined && state.workspaceState) {
       const activeIssue: ActiveIssue = {
-        key: issue ? issue.key : undefined
+        key: issue ? issue.key : undefined,
+        status: issue ? issue.fields.status.name : undefined
       };
       state.workspaceState.update('vscode-jira:active-issue', activeIssue);
       state.update();

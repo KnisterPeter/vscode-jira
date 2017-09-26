@@ -10,6 +10,7 @@ export interface State {
 
 export interface ActiveIssue {
   key?: string;
+  status?: string;
 }
 
 const state: State = {

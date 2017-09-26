@@ -22,7 +22,12 @@ export class TransitionIssueCommand implements Command {
       if (selected === null) {
         vscode.commands.executeCommand('vscode-jira.activateIssues', null);
       } else  if (selected !== undefined) {
-        vscode.window.showInformationMessage(`Should exec transition ${selected.to.name}`);
+        await state.jira.doTransition(activeIssue.key, {
+          transition: {
+            id: selected.id
+          }
+        });
+        await this.deactivateWhenDone(activeIssue);
       }
     }
   }
@@ -61,6 +66,16 @@ export class TransitionIssueCommand implements Command {
   private getActiveIssue(): ActiveIssue | undefined {
     if (state.workspaceState) {
       return state.workspaceState.get('vscode-jira:active-issue');
+    }
+  }
+
+  private async deactivateWhenDone(activeIssue: ActiveIssue): Promise<void> {
+    if (!state.jira || !activeIssue.key) {
+      return;
+    }
+    const result = await state.jira.search({jql: `issue = "${activeIssue.key}" AND resolution = Resolved`});
+    if (result.issues.length > 0) {
+      vscode.commands.executeCommand('vscode-jira.activateIssues', null);
     }
   }
 

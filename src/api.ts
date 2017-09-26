@@ -1,4 +1,4 @@
-import { Pretend, Get, Post } from 'pretend';
+import { Pretend, Get, Post, Interceptor, IPretendRequestInterceptor, IPretendDecoder } from 'pretend';
 
 export interface Jira {
   serverInfo(): Promise<ServerInfo>;
@@ -25,6 +25,9 @@ export interface Issue {
   fields: {
     summary: string;
     description?: string;
+    status: {
+      name: string;
+    }
   };
 }
 
@@ -48,16 +51,45 @@ export interface DoTransitionBody {
 
 export function createClient(endpoint: string, username: string, password: string): Jira {
   return Pretend.builder()
+    .interceptor(impl.logger())
     .basicAuthentication(username, password)
+    .requestInterceptor(impl.contentType())
+    .decode(impl.decoder())
     .target(impl.JiraBlueprint, endpoint);
 }
 
 namespace impl {
 
+  export function logger(): Interceptor {
+    return async(chain, request) => {
+      // console.log('request: ', request);
+      const response = await chain(request);
+      // console.log('response', response);
+      return response;
+    };
+  }
+
+  export function contentType(): IPretendRequestInterceptor {
+    return request => {
+      (request.options.headers as Headers).set('Content-Type', 'application/json');
+      return request;
+    };
+  }
+
+  export function decoder(): IPretendDecoder {
+    return response => {
+      if (response.status === 204) {
+        // no-content
+        return Promise.resolve();
+      }
+      return response.json();
+    };
+  }
+
   export class JiraBlueprint implements Jira {
     @Get('/rest/api/2/serverInfo')
     public serverInfo(): any {/* */}
-    @Get('/rest/api/2/search', true)
+    @Post('/rest/api/2/search')
     public search(): any {/* */}
     @Get('/rest/api/2/issue/:issue/transitions')
     public getTransitions(): any {/* */}
