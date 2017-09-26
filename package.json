@@ -96,6 +96,7 @@
     }
   },
   "dependencies": {
+    "decko": "1.2.0",
     "pretend": "0.7.0"
   }
 }
