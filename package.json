@@ -5,7 +5,7 @@
   "icon": "jira.png",
   "galleryBanner": {
     "color": "#FFFFFF",
-    "theme": "dark"
+    "theme": "light"
   },
   "version": "0.2.1",
   "publisher": "KnisterPeter",
