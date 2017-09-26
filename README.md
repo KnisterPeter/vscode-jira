@@ -8,3 +8,10 @@ This vscode extension integrates with JIRA.
 # Features
 
 * Provide links to JIRA from source code comments
+* Browse issues assigned to you
+
+# Usage
+
+Store your project setup in `.vscode/settings.json` and add the keys `jira.baseUrl` and `jira.projectNames`.
+
+Then setup your credentials first by running `Setup credentials...` command.
