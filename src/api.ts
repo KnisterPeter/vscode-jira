@@ -3,6 +3,7 @@ import { Pretend, Get, Post, Interceptor, IPretendRequestInterceptor, IPretendDe
 export interface Jira {
   serverInfo(): Promise<ServerInfo>;
   search(params: {jql: string}): Promise<Issues>;
+  getIssue(issue: string): Promise<Issue>;
   getTransitions(issue: string): Promise<Transitions>;
   doTransition(issue: string, body: DoTransitionBody): Promise<void>;
 }
@@ -91,6 +92,8 @@ namespace impl {
     public serverInfo(): any {/* */}
     @Post('/rest/api/2/search')
     public search(): any {/* */}
+    @Get('/rest/api/2/issue/:issue')
+    public getIssue(): any {/* */}
     @Get('/rest/api/2/issue/:issue/transitions')
     public getTransitions(): any {/* */}
     @Post('/rest/api/2/issue/:issue/transitions')

@@ -1,10 +1,12 @@
 import * as vscode from 'vscode';
 
-import state, { ActiveIssue } from './state';
+import state, { ActiveIssue, getActiveIssue } from './state';
 
 export class StatusBarManager {
 
   private item: vscode.StatusBarItem;
+
+  private interval: NodeJS.Timer;
 
   constructor() {
     this.item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
@@ -12,13 +14,17 @@ export class StatusBarManager {
     state.subscriber.push(() => {
       this.updateStatus();
     });
+    this.interval = setInterval(() => {
+      this.updateStatus();
+    }, 1000 * 60 * 5);
   }
 
-  public updateStatus(): void {
+  private async updateStatus(): Promise<void> {
     this.item.show();
-    const activeIssue = this.getActiveIssue();
-    if (activeIssue && activeIssue.key) {
-      this.item.text = `$(issue-opened) ${activeIssue.key} ${activeIssue.status}`;
+    const activeIssue = getActiveIssue();
+    if (activeIssue) {
+      const issue = await state.jira.getIssue(activeIssue.key);
+      this.item.text = `$(issue-opened) ${activeIssue.key} ${issue.fields.status.name}`;
       this.item.tooltip = 'Click to transition issue...';
       this.item.command = 'vscode-jira.transitionIssues';
     } else {
@@ -28,13 +34,8 @@ export class StatusBarManager {
     }
   }
 
-  private getActiveIssue(): ActiveIssue | undefined {
-    if (state.workspaceState) {
-      return state.workspaceState.get('vscode-jira:active-issue');
-    }
-  }
-
   public dispose(): void {
     this.item.dispose();
+    clearInterval(this.interval);
   }
 }

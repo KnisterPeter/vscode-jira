@@ -16,7 +16,7 @@ export class BrowseMyIssuesCommand implements Command {
 
   @bind
   public async run(): Promise<void> {
-    const issue = await vscode.commands.executeCommand<Issue | undefined>('vscode-jira.listMyIssues', false);
+    const issue = await vscode.commands.executeCommand<Issue | undefined>('vscode-jira.listMyIssues');
     if (issue) {
       const url = `${this.baseUrl}/browse/${issue.key}`;
       await vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(url));

@@ -3,7 +3,8 @@ import * as vscode from 'vscode';
 
 import { Issue, Transition } from '../api';
 import { Command } from '../command';
-import state, { ActiveIssue } from '../state';
+import { checkEnabled } from '../extension';
+import state, { ActiveIssue, getActiveIssue } from '../state';
 
 export class TransitionIssueCommand implements Command {
 
@@ -11,13 +12,11 @@ export class TransitionIssueCommand implements Command {
 
   @bind
   public async run(withDeactivation = true): Promise<void> {
-    if (!state.jira) {
-      vscode.window.showInformationMessage(
-        'No JIRA client configured. Setup baseUrl, projectNames, username and password');
+    if (!checkEnabled()) {
       return;
     }
-    const activeIssue = this.getActiveIssue();
-    if (activeIssue && activeIssue.key) {
+    const activeIssue = getActiveIssue();
+    if (activeIssue) {
       const selected = await this.selectTransition(withDeactivation, activeIssue);
       if (selected === null) {
         await vscode.commands.executeCommand('vscode-jira.activateIssues', null);
@@ -35,9 +34,6 @@ export class TransitionIssueCommand implements Command {
 
   private async selectTransition(withActivation: boolean, activeIssue: ActiveIssue):
       Promise<Transition | null | undefined> {
-    if (!state.jira || !activeIssue.key) {
-      return;
-    }
     const transitions = await state.jira.getTransitions(activeIssue.key);
     const picks = transitions.transitions.map(transition => ({
       label: transition.to.name || transition.name,
@@ -64,16 +60,7 @@ export class TransitionIssueCommand implements Command {
     return `Deactivate ${activeIssue.key}`;
   }
 
-  private getActiveIssue(): ActiveIssue | undefined {
-    if (state.workspaceState) {
-      return state.workspaceState.get('vscode-jira:active-issue');
-    }
-  }
-
   private async deactivateWhenDone(activeIssue: ActiveIssue): Promise<void> {
-    if (!state.jira || !activeIssue.key) {
-      return;
-    }
     const result = await state.jira.search({jql: `issue = "${activeIssue.key}" AND resolution = Resolved`});
     if (result.issues.length > 0) {
       vscode.commands.executeCommand('vscode-jira.activateIssues', null);

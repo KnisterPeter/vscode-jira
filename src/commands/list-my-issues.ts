@@ -3,26 +3,29 @@ import * as vscode from 'vscode';
 
 import { Issue } from '../api';
 import { Command } from '../command';
+import { checkEnabled } from '../extension';
 import state from '../state';
 
 export class ListMyIssuesCommand implements Command<Issue | undefined | null> {
 
   public id = 'vscode-jira.listMyIssues';
 
-  private baseUrl: string | undefined;
+  private baseUrl: string;
 
-  private projectNames: string[] | undefined;
+  private projectNames: string[];
 
   constructor(baseUrl: string | undefined, projectNames: string[] | undefined) {
-    this.baseUrl = baseUrl;
-    this.projectNames = projectNames;
+    if (baseUrl) {
+      this.baseUrl = baseUrl;
+    }
+    if (projectNames) {
+      this.projectNames = projectNames;
+    }
   }
 
   @bind
-  public async run(withEmpty: string): Promise<Issue | undefined | null> {
-    if (!state.jira || !this.baseUrl || !this.projectNames) {
-      vscode.window.showInformationMessage(
-        'No JIRA client configured. Setup baseUrl, projectNames, username and password');
+  public async run(withEmpty?: string): Promise<Issue | undefined | null> {
+    if (!checkEnabled()) {
       return;
     }
     const issues = await state.jira.search({
@@ -53,6 +56,7 @@ export class ListMyIssuesCommand implements Command<Issue | undefined | null> {
     if (selected) {
       return selected.issue;
     }
+    return undefined;
   }
 
 }
