@@ -17,3 +17,7 @@ This vscode extension integrates with JIRA.
 Store your project setup in `.vscode/settings.json` and add the keys `jira.baseUrl` and `jira.projectNames`.
 
 Then setup your credentials first by running `Setup credentials...` command.
+
+# Resources
+
+Based on [JIRA APIs](https://docs.atlassian.com/jira/REST/)

@@ -41,7 +41,7 @@ export class SetupCredentialsCommand implements Command {
     }
     await this.context.globalState.update(`vscode-jira:${this.baseUrl}`,
       `${username}${CREDENTIALS_SEPARATOR}${password}`);
-    state.jira = await connectToJira();
+    state.jira = (await connectToJira())!;
     state.update();
   }
 

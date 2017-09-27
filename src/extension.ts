@@ -33,7 +33,7 @@ export function activate(_context: vscode.ExtensionContext): void {
     if (credentials) {
       const connect = async() => {
         const [username, password] = credentials.split(CREDENTIALS_SEPARATOR);
-        state.jira = await connectToJira();
+        state.jira = (await connectToJira())!;
         state.update();
       };
       connect().catch(() => {
@@ -54,6 +54,16 @@ export function activate(_context: vscode.ExtensionContext): void {
   context.subscriptions.push(new StatusBarManager());
 }
 
+export function checkEnabled(): boolean {
+  const config = vscode.workspace.getConfiguration('jira');
+  if (!state.jira || !config.has('baseUrl') || !config.has('projectNames')) {
+    vscode.window.showInformationMessage(
+      'No JIRA client configured. Setup baseUrl, projectNames, username and password');
+    return false;
+  }
+  return true;
+}
+
 export async function connectToJira(): Promise<Jira | undefined> {
   const credentials: string | undefined = context.globalState.get(`vscode-jira:${baseUrl}`);
   if (credentials && baseUrl) {
@@ -67,4 +77,5 @@ export async function connectToJira(): Promise<Jira | undefined> {
     }
     return client;
   }
+  return undefined;
 }

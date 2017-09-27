@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 
 import { Issue } from '../api';
 import { Command } from '../command';
-import state, { ActiveIssue } from '../state';
+import state, { ActiveIssue, getActiveIssue, setActiveIssue } from '../state';
 
 export class ActivateIssueCommand implements Command {
 
@@ -12,13 +12,8 @@ export class ActivateIssueCommand implements Command {
   @bind
   public async run(preselected: Issue | null): Promise<void> {
     const issue = await this.selectIssue(preselected);
-    if (issue !== undefined && state.workspaceState) {
-      const activeIssue: ActiveIssue = {
-        key: issue ? issue.key : undefined,
-        status: issue ? issue.fields.status.name : undefined
-      };
-      state.workspaceState.update('vscode-jira:active-issue', activeIssue);
-      state.update();
+    if (issue !== undefined) {
+      setActiveIssue(issue);
     }
   }
 
@@ -26,16 +21,9 @@ export class ActivateIssueCommand implements Command {
     if (preselected || preselected === null) {
       return preselected;
     }
-    const activateIssue = this.getActiveIssue();
-    const name = activateIssue && activateIssue.key
-      ? `Deactivate ${activateIssue.key}`
-      : undefined;
+    const activateIssue = getActiveIssue();
+    const name = activateIssue ? `Deactivate ${activateIssue.key}` : undefined;
     return await vscode.commands.executeCommand<Issue | undefined | null>('vscode-jira.listMyIssues', name);
   }
 
-  private getActiveIssue(): ActiveIssue | undefined {
-    if (state.workspaceState) {
-      return state.workspaceState.get('vscode-jira:active-issue');
-    }
-  }
 }
