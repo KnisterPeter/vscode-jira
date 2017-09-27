@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/KnisterPeter/vscode-jira/compare/v0.2.2...v0.3.0) (2017-09-27)
+
+
+### Bug Fixes
+
+* update status async ([f8bde29](https://github.com/KnisterPeter/vscode-jira/commit/f8bde29))
+
+
+### Features
+
+* add status tooltips ([db62a3b](https://github.com/KnisterPeter/vscode-jira/commit/db62a3b))
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/KnisterPeter/vscode-jira/compare/v0.2.1...v0.2.2) (2017-09-26)
 
