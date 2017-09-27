@@ -20,7 +20,7 @@ export class TransitionIssueCommand implements Command {
     if (activeIssue && activeIssue.key) {
       const selected = await this.selectTransition(withDeactivation, activeIssue);
       if (selected === null) {
-        vscode.commands.executeCommand('vscode-jira.activateIssues', null);
+        await vscode.commands.executeCommand('vscode-jira.activateIssues', null);
       } else  if (selected !== undefined) {
         await state.jira.doTransition(activeIssue.key, {
           transition: {
@@ -29,6 +29,7 @@ export class TransitionIssueCommand implements Command {
         });
         await this.deactivateWhenDone(activeIssue);
       }
+      state.update();
     }
   }
 
