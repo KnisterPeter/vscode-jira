@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.1"></a>
+## [0.3.1](https://github.com/KnisterPeter/vscode-jira/compare/v0.3.0...v0.3.1) (2017-09-29)
+
+
+### Bug Fixes
+
+* do not set status bar priority ([73a5448](https://github.com/KnisterPeter/vscode-jira/commit/73a5448))
+* do not show status bar if no jira is configured ([83c05a1](https://github.com/KnisterPeter/vscode-jira/commit/83c05a1))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/KnisterPeter/vscode-jira/compare/v0.2.2...v0.3.0) (2017-09-27)
 
