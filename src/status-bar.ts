@@ -9,7 +9,7 @@ export class StatusBarManager {
   private interval: NodeJS.Timer;
 
   constructor() {
-    this.item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
+    this.item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
     this.item.text = '$(issue-opened)';
     state.subscriber.push(() => {
       this.updateStatus();
