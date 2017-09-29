@@ -20,6 +20,9 @@ export class StatusBarManager {
   }
 
   private async updateStatus(): Promise<void> {
+    if (!state.jira) {
+      return;
+    }
     this.item.show();
     const activeIssue = getActiveIssue();
     if (activeIssue) {
