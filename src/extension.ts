@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 
 import { createClient, Jira } from './api';
 import { ActivateIssueCommand } from './commands/activate-issue';
+import { AddCommentCommand } from './commands/add-comment';
 import { BrowseMyIssuesCommand } from './commands/browse-my-issues';
 import { ListMyIssuesCommand } from './commands/list-my-issues';
 import { SetupCredentialsCommand } from './commands/setup-credentials';
@@ -47,7 +48,8 @@ export function activate(_context: vscode.ExtensionContext): void {
     new BrowseMyIssuesCommand(baseUrl),
     new ListMyIssuesCommand(baseUrl, projectNames),
     new SetupCredentialsCommand(context, baseUrl),
-    new TransitionIssueCommand()
+    new TransitionIssueCommand(),
+    new AddCommentCommand(baseUrl)
   ];
   context.subscriptions.push(...commands.map(
     command => vscode.commands.registerCommand(command.id, command.run)));
