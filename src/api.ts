@@ -23,7 +23,7 @@ export interface ServerInfo {
 }
 
 export interface Issues {
-  issues: Issue[];
+  issues: Issue[] | undefined;
   maxResults: number;
   startAt: number;
   total: number;

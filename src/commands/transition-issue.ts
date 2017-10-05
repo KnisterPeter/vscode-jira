@@ -36,14 +36,14 @@ export class TransitionIssueCommand implements Command {
       Promise<Transition | null | undefined> {
     const transitions = await state.jira.getTransitions(activeIssue.key);
     const picks = transitions.transitions.map(transition => ({
-      label: transition.to.name || transition.name,
-      description: ``,
+      label: 'Next:',
+      description: transition.name,
       transition
     }));
     if (withActivation) {
       picks.unshift({
-        label: this.getDeactivationText(activeIssue),
-        description: ``,
+        label: 'Pause:',
+        description: this.getDeactivationText(activeIssue),
         transition: null as any
       });
     }
@@ -62,7 +62,7 @@ export class TransitionIssueCommand implements Command {
 
   private async deactivateWhenDone(activeIssue: ActiveIssue): Promise<void> {
     const result = await state.jira.search({jql: `issue = "${activeIssue.key}" AND resolution = Resolved`});
-    if (result.issues.length > 0) {
+    if ((result.issues || []).length > 0) {
       vscode.commands.executeCommand('vscode-jira.activateIssues', null);
     }
   }
