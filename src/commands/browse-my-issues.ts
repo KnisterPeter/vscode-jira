@@ -3,15 +3,14 @@ import * as vscode from 'vscode';
 
 import { Issue } from '../api';
 import { Command } from '../command';
+import { getConfiguration } from '../configuration';
 
 export class BrowseMyIssuesCommand implements Command {
 
   public id = 'vscode-jira.browseMyIssues';
 
-  private baseUrl: string | undefined;
-
-  constructor(baseUrl: string | undefined) {
-    this.baseUrl = baseUrl;
+  private get baseUrl(): string {
+    return getConfiguration().baseUrl;
   }
 
   @bind

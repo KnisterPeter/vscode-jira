@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 
 import { Issue } from '../api';
 import { Command } from '../command';
+import { getConfiguration } from '../configuration';
 import { checkEnabled } from '../extension';
 import state from '../state';
 
@@ -10,17 +11,12 @@ export class ListMyIssuesCommand implements Command<Issue | undefined | null> {
 
   public id = 'vscode-jira.listMyIssues';
 
-  private baseUrl: string;
+  private get baseUrl(): string {
+    return getConfiguration().baseUrl;
+  }
 
-  private projectNames: string[];
-
-  constructor(baseUrl: string | undefined, projectNames: string[] | undefined) {
-    if (baseUrl) {
-      this.baseUrl = baseUrl;
-    }
-    if (projectNames) {
-      this.projectNames = projectNames;
-    }
+  private get projectNames(): string[] {
+    return getConfiguration().projectNames.split(',');
   }
 
   @bind
