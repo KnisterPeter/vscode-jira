@@ -32,7 +32,7 @@ export class ListMyIssuesCommand implements Command<Issue | undefined | null> {
       jql: `project in (${this.projectNames.join(',')}) `
         + 'AND resolution = Unresolved AND assignee in (currentUser()) ORDER BY updated DESC'
     });
-    const picks = issues.issues.map(issue => {
+    const picks = (issues.issues || []).map(issue => {
       return {
         issue,
         label: issue.key,
