@@ -1,14 +1,15 @@
 import * as vscode from 'vscode';
 
+import { getConfiguration } from './configuration';
+
 export class IssueLinkProvider implements vscode.DocumentLinkProvider {
 
-  private baseUrl: string;
+  private get baseUrl(): string {
+    return getConfiguration().baseUrl;
+  }
 
-  private projectNames: string[];
-
-  constructor(baseUrl: string, projectNames: string[]) {
-    this.baseUrl = baseUrl;
-    this.projectNames = projectNames;
+  private get projectNames(): string[] {
+    return getConfiguration().projectNames.split(',');
   }
 
   public provideDocumentLinks(document: vscode.TextDocument, token: vscode.CancellationToken):

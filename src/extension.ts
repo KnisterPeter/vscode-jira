@@ -24,12 +24,10 @@ export function activate(_context: vscode.ExtensionContext): void {
   baseUrl = config.get<string>('baseUrl');
   const projectNames = config.get('projectNames', '').split(',');
 
-  if (baseUrl) {
-    if (projectNames.length > 0) {
-      const jiraLinkProvider = new IssueLinkProvider(baseUrl, projectNames);
-      vscode.languages.registerDocumentLinkProvider('*', jiraLinkProvider);
-    }
+  const jiraLinkProvider = new IssueLinkProvider();
+  vscode.languages.registerDocumentLinkProvider('*', jiraLinkProvider);
 
+  if (baseUrl) {
     const credentials: string | undefined = context.globalState.get(`vscode-jira:${baseUrl}`);
     if (credentials) {
       const connect = async() => {
@@ -45,11 +43,11 @@ export function activate(_context: vscode.ExtensionContext): void {
 
   const commands = [
     new ActivateIssueCommand(),
-    new BrowseMyIssuesCommand(baseUrl),
-    new ListMyIssuesCommand(baseUrl, projectNames),
+    new BrowseMyIssuesCommand(),
+    new ListMyIssuesCommand(),
     new SetupCredentialsCommand(context, baseUrl),
     new TransitionIssueCommand(),
-    new AddCommentCommand(baseUrl)
+    new AddCommentCommand()
   ];
   context.subscriptions.push(...commands.map(
     command => vscode.commands.registerCommand(command.id, command.run)));

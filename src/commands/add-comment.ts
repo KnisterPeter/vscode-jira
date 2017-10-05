@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 
 import { Issue, Transition } from '../api';
 import { Command } from '../command';
+import { getConfiguration } from '../configuration';
 import { checkEnabled } from '../extension';
 import state, { ActiveIssue, getActiveIssue } from '../state';
 
@@ -10,10 +11,8 @@ export class AddCommentCommand implements Command {
 
   public id = 'vscode-jira.addComment';
 
-  private baseUrl: string | undefined;
-
-  constructor(baseUrl: string | undefined) {
-    this.baseUrl = baseUrl;
+  private get baseUrl(): string {
+    return getConfiguration().baseUrl;
   }
 
   @bind
