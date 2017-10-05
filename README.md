@@ -11,6 +11,7 @@ This vscode extension integrates with JIRA.
 * Browse issues assigned to you
 * Track activate issue
 * Transition active issue (update workflow)
+* Add comments to active issue
 
 # Usage
 
