@@ -6,6 +6,15 @@ export interface Jira {
   getIssue(issue: string): Promise<Issue>;
   getTransitions(issue: string): Promise<Transitions>;
   doTransition(issue: string, body: DoTransitionBody): Promise<void>;
+  addComment(issue: string, body: AddCommentBody): Promise<AddCommentResponse>;
+}
+
+export interface AddCommentBody {
+  body: string;
+}
+
+export interface AddCommentResponse {
+  id: string;
 }
 
 export interface ServerInfo {
@@ -88,15 +97,24 @@ namespace impl {
   }
 
   export class JiraBlueprint implements Jira {
+
     @Get('/rest/api/2/serverInfo')
     public serverInfo(): any {/* */}
+
     @Post('/rest/api/2/search')
     public search(): any {/* */}
+
     @Get('/rest/api/2/issue/:issue')
     public getIssue(): any {/* */}
+
     @Get('/rest/api/2/issue/:issue/transitions')
     public getTransitions(): any {/* */}
+
     @Post('/rest/api/2/issue/:issue/transitions')
     public doTransition(): any {/* */}
+
+    @Post('/rest/api/2/issue/:issue/comment')
+    public addComment(): any {/* */}
+
   }
 }

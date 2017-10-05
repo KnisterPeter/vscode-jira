@@ -54,6 +54,11 @@
         "command": "vscode-jira.transitionIssues",
         "title": "Update active issue state...",
         "category": "JIRA"
+      },
+      {
+        "command": "vscode-jira.addComment",
+        "title": "Add comment to active issue...",
+        "category": "JIRA"
       }
     ]
   },
