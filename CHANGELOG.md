@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/KnisterPeter/vscode-jira/compare/v0.3.1...v0.4.0) (2017-10-05)
+
+
+### Bug Fixes
+
+* handle empty issues result ([7ef2091](https://github.com/KnisterPeter/vscode-jira/commit/7ef2091)), closes [#5](https://github.com/KnisterPeter/vscode-jira/issues/5)
+
+
+### Features
+
+* add comment to active issue ([9de27e1](https://github.com/KnisterPeter/vscode-jira/commit/9de27e1)), closes [#6](https://github.com/KnisterPeter/vscode-jira/issues/6)
+
+
+
 <a name="0.3.1"></a>
 ## [0.3.1](https://github.com/KnisterPeter/vscode-jira/compare/v0.3.0...v0.3.1) (2017-09-29)
 
