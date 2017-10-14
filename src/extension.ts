@@ -14,11 +14,14 @@ import { StatusBarManager } from './status-bar';
 export const CREDENTIALS_SEPARATOR = '##';
 
 let context: vscode.ExtensionContext;
+let channel: vscode.OutputChannel;
 let baseUrl: string | undefined;
 
 export function activate(_context: vscode.ExtensionContext): void {
   context = _context;
   state.workspaceState = context.workspaceState;
+  channel = vscode.window.createOutputChannel('JIRA');
+  context.subscriptions.push(channel);
 
   const config = vscode.workspace.getConfiguration('jira');
   baseUrl = config.get<string>('baseUrl');
@@ -67,15 +70,21 @@ export function checkEnabled(): boolean {
 export async function connectToJira(): Promise<Jira | undefined> {
   const credentials: string | undefined = context.globalState.get(`vscode-jira:${baseUrl}`);
   if (credentials && baseUrl) {
-    const [username, password] = credentials.split(CREDENTIALS_SEPARATOR);
-    const client = createClient(baseUrl, username, password);
-    const serverInfo = await client.serverInfo();
-    if (serverInfo.versionNumbers[0] < 5) {
-      vscode.window.showInformationMessage(
-        `Unsupported JIRA version '${serverInfo.version}'. Must be at least 5.0.0`);
-      return;
+    try {
+      const [username, password] = credentials.split(CREDENTIALS_SEPARATOR);
+      const client = createClient(baseUrl, username, password);
+      const serverInfo = await client.serverInfo();
+      if (serverInfo.versionNumbers[0] < 5) {
+        vscode.window.showInformationMessage(
+          `Unsupported JIRA version '${serverInfo.version}'. Must be at least 5.0.0`);
+        return;
+      }
+      channel.appendLine(`Connected to JIRA server at '${baseUrl}'`);
+      return client;
+    } catch (e) {
+      channel.appendLine(`Failed to contact JIRA server using '${baseUrl}'`);
+      channel.appendLine(e.message);
     }
-    return client;
   }
   return undefined;
 }
