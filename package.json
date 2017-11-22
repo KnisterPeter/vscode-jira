@@ -31,7 +31,7 @@
         },
         "jira.projectNames": {
           "type": "string",
-          "description": "Project name of your JIRA project to scan for (could be a comma separated list of names)",
+          "description": "Project KEY of your JIRA project to scan for (could be a comma separated list of names)",
           "default": ""
         }
       }
