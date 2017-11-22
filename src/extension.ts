@@ -82,7 +82,7 @@ export async function connectToJira(): Promise<Jira | undefined> {
       channel.appendLine(`Connected to JIRA server at '${baseUrl}'`);
       return client;
     } catch (e) {
-      channel.appendLine(`Failed to contact JIRA server using '${baseUrl}'`);
+      channel.appendLine(`Failed to contact JIRA server using '${baseUrl}'. Please check url and credentials`);
       channel.appendLine(e.message);
     }
   }
