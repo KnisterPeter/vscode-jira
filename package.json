@@ -78,18 +78,18 @@
     "publish-extension": "vsce publish $(node -e \"console.log(require('./package.json').version)\")"
   },
   "devDependencies": {
-    "@knisterpeter/standard-tslint": "^1.5.0",
-    "typescript": "^2.5.2",
-    "vscode": "^1.1.5",
-    "mocha": "^3.5.0",
-    "@types/node": "^7.0.43",
-    "@types/mocha": "^2.2.42",
-    "conventional-changelog-lint": "^2.0.0",
-    "conventional-changelog-lint-config-angular": "1.0.0",
-    "cz-customizable": "5.0.0",
-    "husky": "^0.14.1",
-    "standard-version": "4.2.0",
-    "tslint": "5.6.0"
+    "@knisterpeter/standard-tslint": "^1.6.0",
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.7",
+    "mocha": "^4.0.1",
+    "@types/node": "^8.0.53",
+    "@types/mocha": "^2.2.44",
+    "conventional-changelog-lint": "^2.1.1",
+    "conventional-changelog-lint-config-angular": "^1.0.0",
+    "cz-customizable": "^5.2.0",
+    "husky": "^0.14.3",
+    "standard-version": "^4.2.0",
+    "tslint": "^5.8.0"
   },
   "repository": {
     "type": "git",
@@ -113,7 +113,7 @@
     }
   },
   "dependencies": {
-    "decko": "1.2.0",
-    "pretend": "0.7.0"
+    "decko": "^1.2.0",
+    "pretend": "^1.1.0"
   }
 }
