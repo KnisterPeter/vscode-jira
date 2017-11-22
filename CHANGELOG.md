@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/KnisterPeter/vscode-jira/compare/v0.5.0...v0.5.1) (2017-11-22)
+
+
+### Bug Fixes
+
+* add url and credentials hint ([5657d82](https://github.com/KnisterPeter/vscode-jira/commit/5657d82))
+* declare to require project key ([cef8d9a](https://github.com/KnisterPeter/vscode-jira/commit/cef8d9a)), closes [#18](https://github.com/KnisterPeter/vscode-jira/issues/18)
+* set priority for status bar item ([173c9ed](https://github.com/KnisterPeter/vscode-jira/commit/173c9ed)), closes [#16](https://github.com/KnisterPeter/vscode-jira/issues/16)
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/KnisterPeter/vscode-jira/compare/v0.4.0...v0.5.0) (2017-10-14)
 
