@@ -1,3 +1,4 @@
+import 'isomorphic-fetch';
 import * as vscode from 'vscode';
 
 import { createClient, Jira } from './api';
