@@ -114,6 +114,7 @@
   },
   "dependencies": {
     "decko": "^1.2.0",
+    "isomorphic-fetch": "2.2.1",
     "pretend": "^1.1.0"
   }
 }
