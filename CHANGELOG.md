@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.2"></a>
+## [0.5.2](https://github.com/KnisterPeter/vscode-jira/compare/v0.5.1...v0.5.2) (2017-11-25)
+
+
+### Bug Fixes
+
+* add missing fetch dependency ([a20c121](https://github.com/KnisterPeter/vscode-jira/commit/a20c121)), closes [#24](https://github.com/KnisterPeter/vscode-jira/issues/24)
+
+
+
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/KnisterPeter/vscode-jira/compare/v0.5.0...v0.5.1) (2017-11-22)
 
