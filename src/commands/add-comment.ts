@@ -16,16 +16,18 @@ export class AddCommentCommand implements Command {
   }
 
   @bind
-  public async run(): Promise<void> {
+  public async run(text?: string): Promise<void> {
     if (!checkEnabled()) {
       return;
     }
     const activeIssue = getActiveIssue();
     if (activeIssue) {
-      const text = await vscode.window.showInputBox({
-        ignoreFocusOut: true,
-        placeHolder: 'Comment text...'
-      });
+      if (!text) {
+        text = await vscode.window.showInputBox({
+          ignoreFocusOut: true,
+          placeHolder: 'Comment text...'
+        });
+      }
       if (text) {
         const response = await state.jira.addComment(activeIssue.key, {body: text});
         const action = await vscode.window.showInformationMessage('Created comment', 'Open in browser');
