@@ -19,6 +19,19 @@ Store your project setup in `.vscode/settings.json` and add the keys `jira.baseU
 
 Then setup your credentials first by running `Setup credentials...` command.
 
+# Configuration
+
+Based on the `jira.projectNames` settings this extensions scans the open file in code
+and searches for '`#<project-name>-1234`' mentions. These occurences will then be linked to
+your JIRA issues.
+
+If you need to search for more than one JIRA project you can add multiple project names
+by separating via comma.
+
+For example to connect to this JIRA instance [VSJT](https://knisterpeter.atlassian.net/projects/VSJT)
+add `"jira.projectNames": "VSJT"` to your settings.
+Then you can add a comment like this '`// #VSJT-1`' in your file to reference an issue.
+
 # Resources
 
 Based on [JIRA APIs](https://docs.atlassian.com/jira/REST/)
